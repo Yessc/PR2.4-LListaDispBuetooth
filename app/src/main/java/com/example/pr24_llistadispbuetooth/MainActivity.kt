@@ -11,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-import com.example.pr24_llistadispbuetooth.BluetoothAdapterRecycler
-import com.example.pr24_llistadispbuetooth.BluetoothDeviceItem
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,11 +34,6 @@ class MainActivity : AppCompatActivity() {
         checkPermissionAndLoad()
     }
 
-    /**
-     * Comprobar el permiso BLUETOOTH_CONNECT (Android 12+)
-     * Si lo tenemos → cargamos dispositivos
-     * Si no → lo solicitamos al usuario
-     */
     private fun checkPermissionAndLoad() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { // Android 12 o superior
             if (checkSelfPermission(Manifest.permission.BLUETOOTH_CONNECT)
@@ -58,17 +51,12 @@ class MainActivity : AppCompatActivity() {
         loadBluetoothDevices()
     }
 
-    /**
-     * Obtener los dispositivos Bluetooth emparejados
-     * y mostrarlos en la RecyclerView
-     */
     @SuppressLint("MissingPermission") // Evita error de compilador en Android 12+
     private fun loadBluetoothDevices() {
 
-        // Adaptador Bluetooth del sistema
+
         val btAdapter = BluetoothAdapter.getDefaultAdapter()
 
-        // Dispositivos emparejados (bonded). Si no hay, usamos conjunto vacío
         val pairedDevices = btAdapter?.bondedDevices ?: emptySet()
 
         // Convertimos los dispositivos reales a nuestra data class
@@ -101,9 +89,7 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    /**
-     * Recibe la respuesta del usuario cuando acepta o rechaza el permiso
-     */
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
